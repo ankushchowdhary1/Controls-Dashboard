@@ -68,39 +68,3 @@ bar_fig = px.bar(
     color_continuous_scale="Teal"
 )
 st.plotly_chart(bar_fig, use_container_width=True)
-
-# --- Control Type Drilldown ---
-st.subheader("📂 Control Type Drilldown (Interactive)")
-
-# Sample drilldown data (mocked example)
-controls_data = pd.DataFrame({
-    "Control Name": [
-        "User Account Management", "Multi-Factor Authentication", "Session Timeout", "Access Review",
-        "Privileged Access Management", "Default Credential Management"
-    ],
-    "Domain": [
-        "Identification & Authentication", "Identification & Authentication", "Identification & Authentication",
-        "Identification & Authentication", "Identification & Authentication", "Identification & Authentication"
-    ],
-    "Compliant": ["Yes", "No", "No", "Yes", "No", "Yes"],
-    "Evidence Uploaded": ["Yes", "No", "No", "Yes", "No", "Yes"],
-    "Guideline Available": ["Yes", "Yes", "No", "Yes", "No", "Yes"]
-})
-
-selected_control_domain = st.selectbox("Select Control Domain for Drilldown", controls_data["Domain"].unique())
-filtered_controls = controls_data[controls_data["Domain"] == selected_control_domain]
-st.dataframe(filtered_controls)
-
-bullet_chart = px.bar(
-    filtered_controls,
-    x=[1]*len(filtered_controls),
-    y="Control Name",
-    color="Compliant",
-    orientation='h',
-    title="Control Compliance Drilldown",
-    color_discrete_map={"Yes": "green", "No": "red"},
-    labels={"x": "", "y": "Control"},
-    height=400
-)
-
-st.plotly_chart(bullet_chart, use_container_width=True)
