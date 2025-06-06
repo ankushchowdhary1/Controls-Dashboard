@@ -3,54 +3,42 @@ import pandas as pd
 
 # Setup
 st.set_page_config(layout="wide")
-st.title("🛡️ Vulnerability & Patch Management Controls (12 Total)")
+st.title("🌐 Web Security Controls Overview (4 Total)")
 
 # Summary
 st.markdown("""
 ### 📊 Summary
-- **Total Controls**: 12  
-- **Compliant**: 5  
-- **Not Compliant / No Response**: 7  
+- **Total Controls**: 4  
+- **Compliant**: 4  
+- **Not Compliant / No Response**: 0  
 """)
 
 # Recommendations
 st.markdown("""
 ### ✅ Recommendations
-> While core scanning and remediation using Rapid7 is well-established, automation and centralized tracking are lacking:
-> - Improve visibility into patching and remediation workflow across platforms.  
-> - Assign accountability for automation status, event review, and internal scans.  
-> - Validate and document all control functions, especially those marked "No response".
+> Web security controls are fully implemented:
+> - Continue leveraging SDLC practices to manage unauthorized code and secure development.  
+> - Periodically review OWASP and DMZ strategies to align with current threat trends.  
+> - Document team responsibilities and ensure all secure frameworks remain up-to-date.
 """)
 
-# Control Table
-controls = {
+# Controls Table
+data = {
     "Control Description": [
-        "Vulnerability & patch management program",
-        "Vulnerability remediation",
-        "Software and firmware patching",
-        "Centralized management of flaw remediation processes",
-        "Automated remediation status",
-        "Vulnerability scanning",
-        "Privileged access",
-        "Trend analysis",
-        "Review historical event logs",
-        "External vulnerability assessment scans",
-        "Internal vulnerability assessment scans",
-        "Penetration testing"
+        "Unauthorized code",
+        "Use of demilitarized zones",
+        "Web security standard (OWASP) incorporated into SDLC",
+        "Web application framework"
     ],
-    "Risk Rating": ["High"] * 12,
-    "Status": [
-        "Compliant", "Compliant", "Not Compliant", "Not Compliant",
-        "Not Compliant", "Compliant", "Not Compliant", "Compliant",
-        "Not Compliant", "Compliant", "Not Compliant", "Not Compliant"
-    ]
+    "Risk Rating": ["High"] * 4,
+    "Status": ["Compliant"] * 4
 }
 
-# Render DataFrame
-st.subheader("📋 Vulnerability & Patch Control Table")
-df = pd.DataFrame(controls)
-st.dataframe(df, use_container_width=True, height=500)
+# Table display
+st.subheader("📋 Web Security Control Table")
+df = pd.DataFrame(data)
+st.dataframe(df, use_container_width=True, height=300)
 
 # Export
 st.subheader("📤 Export View")
-st.caption("Use browser print/save. PNG export available via html2image.")
+st.caption("Use browser print/PDF. PNG export available via html2image.")
