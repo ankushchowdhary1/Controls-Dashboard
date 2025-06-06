@@ -56,12 +56,12 @@ domain_data = pd.DataFrame({
     "Guidelines": [6, 3, 1, 1, 2, 2, 3, 16, 1, 6, 6, 3, 1, 11, 5, 4]
 })
 
-selected_domain = st.selectbox("Select a Domain to Highlight", ["All"] + domain_data["Domain"].tolist())
-filtered_data = domain_data if selected_domain == "All" else domain_data[domain_data["Domain"] == selected_domain]
-st.dataframe(filtered_data)
+# Display full table with no dropdown or scroll
+st.dataframe(domain_data, use_container_width=True, height=800)
 
+# Compliance Bar Chart
 bar_fig = px.bar(
-    filtered_data,
+    domain_data,
     x="Domain",
     y="Compliant %",
     title="Compliance Percentage by Domain",
@@ -95,7 +95,7 @@ def create_pdf(dataframe):
     return buffer
 
 if st.button("📄 Export Domain Data to PDF"):
-    pdf_bytes = create_pdf(filtered_data)
+    pdf_bytes = create_pdf(domain_data)
     st.download_button(
         label="Download PDF",
         data=pdf_bytes,
