@@ -1,56 +1,57 @@
 import streamlit as st
 import pandas as pd
 
-# Setup
+# Page config
 st.set_page_config(layout="wide")
-st.title("🧰 Maintenance Controls Overview (10 Total)")
+st.title("🌐 Network Security Controls Overview (29 Total)")
 
-# Summary Section
+# Summary
 st.markdown("""
 ### 📊 Summary
-- **Total Controls**: 10  
-- **Compliant**: 1  
-- **Not Compliant**: 9  
-- **NA values interpreted as Not Compliant due to lack of evidence**
+- **Total Controls**: 29  
+- **Compliant**: 6  
+- **Not Compliant / No Evidence**: 23  
+- **NA treated as Not Compliant due to lack of evidence or ownership**
+
+These controls were grouped into categories to improve structure and accountability.
 """)
 
-# Recommendations Section
+# Recommendations
 st.markdown("""
 ### ✅ Recommendations
-> The maintenance domain exhibits significant control implementation gaps:
-> - Assign formal ownership for maintenance policy, execution, and tracking.  
-> - Implement controls for remote maintenance protections, notifications, cryptography, and access authorization.  
-> - Ensure alignment of service vendors with internal control expectations and document SLAs.
+> Network Security controls indicate wide gaps in visibility and ownership:
+> - Define control ownership between networking, infrastructure, and security teams.  
+> - Formalize implementation of built-in protections (e.g., ACLs, encryption, segmentation) with audit-ready evidence.  
+> - Ensure proper DNS, routing, messaging, and wireless controls are validated and monitored.  
+> - Assign responsibility for segmentation, endpoint protection, and secure routing.
 """)
 
-# Control Table Data
+# Categorized summary (sampled)
 data = {
-    "Control Description": [
-        "Maintenance operations",
-        "Controlled maintenance",
-        "Timely maintenance",
-        "Prevent unauthorized removal",
-        "Remote maintenance",
-        "Auditing remote maintenance",
-        "Remote maintenance notifications",
-        "Remote maintenance cryptographic protection",
-        "Remote maintenance disconnect verification",
-        "Authorized maintenance personnel"
+    "Category": [
+        "Network Perimeter & Filtering",
+        "Traffic Control & Segmentation",
+        "Network Management & Access Policies",
+        "DNS & Name Resolution",
+        "Wireless & Remote Access Security",
+        "Secure Communication & Encryption"
     ],
-    "Risk Rating": ["High"] * 10,
+    "Risk Rating": ["High"] * 6,
     "Status": [
-        "Not Compliant", "Not Compliant", "Not Compliant",
-        "Not Compliant", "Not Compliant", "Not Compliant",
-        "Not Compliant", "Not Compliant", "Not Compliant", "Compliant"
+        "Not Compliant",  # Most perimeter and filtering controls lack evidence
+        "Not Compliant",  # Segmentation & ACLs marked NA or unclear
+        "Not Compliant",  # Management controls have no evidence
+        "Not Compliant",  # DNS and resolver integrity is not confirmed
+        "Partially Compliant",  # Some controls are in place for remote and VPN access
+        "Partially Compliant"  # Encryption via VPN and proxy confirmed, but not across all systems
     ]
 }
 
-# DataFrame and display
+# Display categorized table
+st.subheader("📋 Categorized Network Security Summary")
 df = pd.DataFrame(data)
-
-st.subheader("📋 Maintenance Controls Table")
-st.dataframe(df, use_container_width=True, height=450)
+st.dataframe(df, use_container_width=True, height=300)
 
 # Export option
-st.subheader("📤 Export One-Pager")
-st.caption("Use your browser's print or PDF export. For PNG, integrate html2image.")
+st.subheader("📤 Export View")
+st.caption("Use browser print/PDF. PNG export available via html2image.")
