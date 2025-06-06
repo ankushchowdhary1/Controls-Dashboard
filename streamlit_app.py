@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
 
-# Page setup
+# Setup
 st.set_page_config(layout="wide")
 st.title("📡 Continuous Monitoring (14 Controls) Overview")
 
@@ -9,43 +9,45 @@ st.title("📡 Continuous Monitoring (14 Controls) Overview")
 st.markdown("""
 ### 📊 Summary
 - **Total Controls**: 14  
-- **Compliant**: 1  
+- **Compliant**: 2  
 - **Partially Compliant**: 2  
 - **Not Compliant**: 5  
-- **Not Assessed (NA)**: 6  
+- **Not Assessed (NA)**: 5  
 """)
 
-# Recommendations
+# Recommendation
 st.markdown("""
 ### ✅ Recommendation
-> This domain requires urgent visibility and structure.
-> - Assign control ownership across teams (IR, Infra, Security).
-> - Audit configuration of logs, file monitoring, IDS/IPS systems.
-> - Remove “NA” status by clarifying team responsibilities and validating deployment status.
+> Consolidate tooling and ownership for detection and monitoring controls.
+> - Align SIEM (QRadar) and IR ownership with compliance reporting.
+> - Clarify responsibility for FIM, audit trails, anomaly detection, and centralized logging.
+> - Convert NA-rated controls into either compliant or non-compliant with documented evaluations.
 """)
 
-# Table data
+# Control Data
 data = {
     "Control Description": [
         "Continuous monitoring controls", "Intrusion detection and prevention systems",
         "Automated tools for real-time analysis", "Inbound and outbound communications traffic",
         "File integrity monitoring (FIM)", "Log reviews and updates",
         "Centralized collection of security event logs", "Correlate monitoring information",
-        "Audit trails", "Time stamps"
+        "Audit trails", "Time stamps",
+        "Protection of event logs", "Event log retention", "Anomalous behavior"
     ],
     "Status": [
         "Partially compliant", "Partially compliant", "NA", "Not compliant",
         "Not compliant", "NA", "NA", "Not compliant",
-        "Not compliant", "Compliant"
+        "Not compliant", "Compliant",
+        "NA", "Compliant", "NA"
     ],
-    "Risk Rating": ["High"] * 10
+    "Risk Rating": ["High"] * 13
 }
 df = pd.DataFrame(data)
 
-# Display table
+# Table
 st.subheader("📋 Control Compliance Table")
 st.dataframe(df, use_container_width=True)
 
-# Export section
+# Export option
 st.subheader("📤 Export One-Pager")
-st.caption("Use your browser’s print or PDF save feature for now. PNG automation optional via `html2image`.")
+st.caption("Use browser print/save or integrate html2image for automation.")
