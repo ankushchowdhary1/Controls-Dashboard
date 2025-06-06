@@ -1,57 +1,57 @@
 import streamlit as st
 import pandas as pd
 
-# Page config
+# Page setup
 st.set_page_config(layout="wide")
-st.title("🌐 Network Security Controls Overview (29 Total)")
+st.title("🏢 Physical & Environmental Security Controls (19 Total)")
 
-# Summary
+# Summary Section
 st.markdown("""
 ### 📊 Summary
-- **Total Controls**: 29  
-- **Compliant**: 6  
-- **Not Compliant / No Evidence**: 23  
-- **NA treated as Not Compliant due to lack of evidence or ownership**
-
-These controls were grouped into categories to improve structure and accountability.
+- **Total Controls**: 19  
+- **Compliant**: 8  
+- **Not Compliant / No Response**: 11  
 """)
 
-# Recommendations
+# Recommendations Section
 st.markdown("""
 ### ✅ Recommendations
-> Network Security controls indicate wide gaps in visibility and ownership:
-> - Define control ownership between networking, infrastructure, and security teams.  
-> - Formalize implementation of built-in protections (e.g., ACLs, encryption, segmentation) with audit-ready evidence.  
-> - Ensure proper DNS, routing, messaging, and wireless controls are validated and monitored.  
-> - Assign responsibility for segmentation, endpoint protection, and secure routing.
+> While foundational physical protections are in place, gaps exist in formal documentation and ownership:
+> - Assign responsibility for environmental monitoring, alarm systems, and supporting infrastructure.  
+> - Upload and maintain evidence for controls marked "No response".  
+> - Ensure visitor management, surveillance, and access policy compliance is periodically reviewed and audited.
 """)
 
-# Categorized summary (sampled)
+# Detailed Control Table
 data = {
-    "Category": [
-        "Network Perimeter & Filtering",
-        "Traffic Control & Segmentation",
-        "Network Management & Access Policies",
-        "DNS & Name Resolution",
-        "Wireless & Remote Access Security",
-        "Secure Communication & Encryption"
+    "Control Description": [
+        "Physical and environmental protection",
+        "Role-based physical access",
+        "Physical access controls",
+        "Controlled ingress and egress points",
+        "Physical security of offices, rooms and facilities",
+        "Working in secure areas",
+        "Intrusion alarms/surveillance equipment",
+        "Visitor control",
+        "Supporting utilities",
+        "Fire detection devices",
+        "Temperature and humidity controls"
     ],
-    "Risk Rating": ["High"] * 6,
+    "Risk Rating": ["High"] * 11,
     "Status": [
-        "Not Compliant",  # Most perimeter and filtering controls lack evidence
-        "Not Compliant",  # Segmentation & ACLs marked NA or unclear
-        "Not Compliant",  # Management controls have no evidence
-        "Not Compliant",  # DNS and resolver integrity is not confirmed
-        "Partially Compliant",  # Some controls are in place for remote and VPN access
-        "Partially Compliant"  # Encryption via VPN and proxy confirmed, but not across all systems
+        "Not Compliant", "Compliant", "Compliant", "Compliant",
+        "Not Compliant", "Compliant", "Not Compliant", "Compliant",
+        "Not Compliant", "Compliant", "Compliant"
     ]
 }
 
-# Display categorized table
-st.subheader("📋 Categorized Network Security Summary")
+# Convert to DataFrame
 df = pd.DataFrame(data)
-st.dataframe(df, use_container_width=True, height=300)
 
-# Export option
+# Table Display
+st.subheader("📋 Physical & Environmental Security Control Table")
+st.dataframe(df, use_container_width=True, height=500)
+
+# Export Section
 st.subheader("📤 Export View")
-st.caption("Use browser print/PDF. PNG export available via html2image.")
+st.caption("Use browser print/save or html2image for PNG export.")
