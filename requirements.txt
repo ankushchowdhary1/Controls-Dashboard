@@ -4,3 +4,4 @@ pandas
 fpdf
 pytesseract
 Pillow
+kaleido
