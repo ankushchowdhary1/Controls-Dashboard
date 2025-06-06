@@ -5,6 +5,7 @@ from html2image import Html2Image
 
 # Streamlit setup
 st.set_page_config(layout="wide")
+st.title("🔧 Change Management (6 Controls) Overview")
 
 # Summary
 st.markdown("""
