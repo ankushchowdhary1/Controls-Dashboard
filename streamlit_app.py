@@ -3,54 +3,52 @@ import pandas as pd
 
 # Page setup
 st.set_page_config(layout="wide")
-st.title("🛠️ Secure Engineering, Architecture & Operations Controls")
+st.title("🧪 Technology Development & Acquisition (TDA) Controls Overview")
 
-# Summary
+# Summary Section
 st.markdown("""
 ### 📊 Summary
-- **Total Controls**: 12  
-- **Compliant**: 6  
-- **Not Compliant / No Response**: 6  
+- **Total Controls**: 29  
+- **Compliant**: 13  
+- **Not Compliant / No Response**: 16  
 """)
 
 # Recommendations
 st.markdown("""
 ### ✅ Recommendations
-> Secure Engineering and Security Operations show mixed maturity:
-> - Formalize architectural alignment, centralized control management, and time sync enforcement.  
-> - Validate and enforce standard notification banners and truncated warnings.  
-> - Integrate operations processes into broader control monitoring and reporting lifecycle.
+> TDA controls are partially implemented with notable gaps in secure development practices:
+> - Assign ownership for early-stage security like SBOM, code analysis, and threat remediation.  
+> - Incorporate secure-by-default practices throughout the development lifecycle.  
+> - Improve evidence collection and role clarity for developer responsibilities.
 """)
 
-# Control Table Data
+# Grouped summary of controls by category
+categories = [
+    "Product Security Lifecycle Governance",
+    "Secure Development Practices",
+    "Code Quality & Testing",
+    "Component & Configuration Security",
+    "Developer Operations & Environment"
+]
+
 data = {
-    "Control Description": [
-        "Secure engineering principles",
-        "Centralized management of cybersecurity and data privacy controls",
-        "Alignment with enterprise architecture",
-        "Technical debt reviews",
-        "Defense in depth architecture",
-        "Non-persistence",
-        "System use notification (logon banner)",
-        "Standardized Microsoft Windows banner",
-        "Truncated banner",
-        "Clock synchronization",
-        "Standardized operating procedures (SOP)",
-        "Security Concept of Operations"
-    ],
-    "Risk Rating": ["High"] * 12,
+    "Category": categories,
+    "Risk Rating": ["High"] * 5,
     "Status": [
-        "Compliant", "Not Compliant", "Not Compliant", "Compliant", "Not Compliant",
-        "Compliant", "Not Compliant", "Compliant", "Not Compliant", "Not Compliant",
-        "Compliant", "Not Compliant"
+        "Not Compliant",  # SBOM, developer training, role ambiguity
+        "Partially Compliant",  # SDLC, maturity model in place but gaps in enforcement
+        "Not Compliant",  # Lacking static/dynamic analysis and testing evidence
+        "Compliant",  # Secure configuration and access restrictions present
+        "Partially Compliant"  # Some processes followed but lacking coverage and documentation
     ]
 }
 
-# Display table
-st.subheader("📋 Control Table")
 df = pd.DataFrame(data)
-st.dataframe(df, use_container_width=True, height=550)
+
+# Table
+st.subheader("📋 Categorized Control Summary")
+st.dataframe(df, use_container_width=True, height=350)
 
 # Export
 st.subheader("📤 Export View")
-st.caption("Use browser print/save to PDF or integrate with html2image for PNG export.")
+st.caption("Use browser print/PDF. PNG export available via html2image integration.")
