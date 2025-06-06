@@ -5,21 +5,21 @@ import pandas as pd
 st.set_page_config(layout="wide")
 st.title("🏢 Physical & Environmental Security Controls (19 Total)")
 
-# Summary Section
+# Summary
 st.markdown("""
 ### 📊 Summary
 - **Total Controls**: 19  
-- **Compliant**: 8  
-- **Not Compliant / No Response**: 11  
+- **Compliant**: 11  
+- **Not Compliant / No Response**: 8  
 """)
 
-# Recommendations Section
+# Recommendations
 st.markdown("""
 ### ✅ Recommendations
-> While foundational physical protections are in place, gaps exist in formal documentation and ownership:
-> - Assign responsibility for environmental monitoring, alarm systems, and supporting infrastructure.  
-> - Upload and maintain evidence for controls marked "No response".  
-> - Ensure visitor management, surveillance, and access policy compliance is periodically reviewed and audited.
+> While key physical security mechanisms are in place, there are several gaps in evidence, response, and environmental monitoring:
+> - Assign ownership for environmental safety, alarms, and surveillance controls.  
+> - Ensure all compliant controls are backed by updated documentation and access logs.  
+> - Address "No response" areas with process clarification, monitoring, and physical audits.
 """)
 
 # Detailed Control Table
@@ -35,23 +35,37 @@ data = {
         "Visitor control",
         "Supporting utilities",
         "Fire detection devices",
-        "Temperature and humidity controls"
+        "Temperature and humidity controls",
+        "Equipment siting and protection",
+        "Transmission medium security"
     ],
-    "Risk Rating": ["High"] * 11,
+    "Risk Rating": ["High"] * 13,
     "Status": [
-        "Not Compliant", "Compliant", "Compliant", "Compliant",
-        "Not Compliant", "Compliant", "Not Compliant", "Compliant",
-        "Not Compliant", "Compliant", "Compliant"
+        "Not Compliant", "Compliant", "Compliant", "Compliant", "Not Compliant",
+        "Compliant", "Not Compliant", "Compliant", "Not Compliant", "Compliant",
+        "Compliant", "Compliant", "Compliant"
     ]
 }
 
-# Convert to DataFrame
+# Add remaining 6 controls
+additional_controls = [
+    "Power equipment and cabling security",
+    "Emergency shutoff",
+    "Emergency lighting",
+    "Fire suppression",
+    "Delivery and loading area security",
+    "Protection from environmental threats"
+]
+data["Control Description"].extend(additional_controls)
+data["Risk Rating"].extend(["High"] * 6)
+data["Status"].extend(["Compliant", "Compliant", "Compliant", "Compliant", "Compliant", "Compliant"])
+
+# DataFrame and display
 df = pd.DataFrame(data)
 
-# Table Display
-st.subheader("📋 Physical & Environmental Security Control Table")
-st.dataframe(df, use_container_width=True, height=500)
+st.subheader("📋 Full Control Table")
+st.dataframe(df, use_container_width=True, height=600)
 
-# Export Section
+# Export option
 st.subheader("📤 Export View")
-st.caption("Use browser print/save or html2image for PNG export.")
+st.caption("Use your browser’s print/save to PDF, or integrate html2image for PNG export.")
