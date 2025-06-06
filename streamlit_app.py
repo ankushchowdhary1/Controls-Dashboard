@@ -3,48 +3,46 @@ import pandas as pd
 
 # Page setup
 st.set_page_config(layout="wide")
-st.title("🛡️ Compliance (6 Controls) Overview")
+st.title("🧩 Configuration Management (10 Controls) Overview")
 
 # Summary
 st.markdown("""
 ### 📊 Summary
-- **Total Controls**: 6  
-- **Compliant**: 1  
-- **Partially Compliant**: 2  
-- **Not Compliant**: 3  
+- **Total Controls**: 10 (+2 NA)  
+- **Compliant**: 4  
+- **Partially Compliant**: 1  
+- **Not Compliant**: 4  
+- **Not Assessed (NA)**: 2  
 """)
 
-# Recommendations
+# Recommendation
 st.markdown("""
 ### ✅ Recommendation
-> Prioritize governance and regulatory traceability.
-> - Assign ownership for compliance and cybersecurity regulation coverage.
-> - Implement routine assessments for data protection and governmental access handling.
-> - Leverage existing ISO 27001/9001 certification to build missing documentation.
+> Establish formal baseline documentation and strengthen configuration visibility.
+> - Assign ownership for system hardening and tailoring controls.
+> - Audit user-install permissions and clarify open-source usage policies.
+> - Expand process awareness and evidence collection for NA areas.
 """)
 
-# Control data
+# Control Data
 data = {
     "Control Description": [
-        "Statutory, regulatory and contractual controls identification",
-        "Non-compliance oversight",
-        "Compliance scope",
-        "Cybersecurity & data protection controls oversight",
-        "Cybersecurity & data protection assessment",
-        "Government surveillance"
+        "Configuration management", "System hardening through baseline configurations", "Respond to unauthorized changes",
+        "Approved configuration deviations", "Baseline tailoring", "Least functionality", "Software usage restrictions",
+        "Open source software", "User-installed software", "Restrict roles permitted to install software"
     ],
     "Status": [
-        "Compliant", "Not compliant", "Partially compliant",
-        "Partially compliant", "Not compliant", "Not compliant"
+        "Not compliant", "Not compliant", "Compliant", "Compliant", "Not compliant", "Partially compliant",
+        "Compliant", "NA", "Compliant", "NA"
     ],
-    "Risk Rating": ["High"] * 6
+    "Risk Rating": ["High"] * 10
 }
 df = pd.DataFrame(data)
 
-# Table display
+# Table
 st.subheader("📋 Control Compliance Table")
 st.dataframe(df, use_container_width=True)
 
-# Export note
+# Export Note
 st.subheader("📤 Export One-Pager")
-st.caption("Use your browser’s print/save to PDF option or integrate with html2image for automation.")
+st.caption("Use your browser’s print/save option or integrate with html2image for image export.")
