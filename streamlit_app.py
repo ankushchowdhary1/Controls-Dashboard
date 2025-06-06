@@ -1,48 +1,64 @@
 import streamlit as st
-from PIL import Image
-import pytesseract
-import io
+import pandas as pd
+import plotly.express as px
 
-# Page config
-st.set_page_config(page_title="Slide Analyzer", layout="wide")
-st.title("🧠 Project Slide Analyzer")
+# Page setup
+st.set_page_config(page_title="Control Implementation Chart", layout="wide")
+st.title("📊 Control Implementation Rates by Domain")
 
-# File uploader
-uploaded_file = st.file_uploader("Upload a slide image (PNG, JPG)", type=["png", "jpg", "jpeg"])
+# Data
+data = {
+    "Domain": [
+        "Security Operations", "Web Security", "Change Management", "Asset Management",
+        "Physical & Environmental Security", "Secure Engineering & Architecture",
+        "Technology Development & Acquisition", "Cloud Security", "Configuration Management",
+        "Vulnerability & Patch Management", "Identification & Authentication", "Compliance",
+        "Endpoint Security", "Network Security", "Maintenance", "Continuous Monitoring"
+    ],
+    "Implementation %": [
+        100, 100, 80, 70,
+        65, 60, 58, 55, 55,
+        55, 44, 33,
+        27, 27, 23, 18
+    ]
+}
+df = pd.DataFrame(data)
 
-if uploaded_file:
-    # Display the image
-    image = Image.open(uploaded_file)
-    st.subheader("📷 Uploaded Slide")
-    st.image(image, use_column_width=True)
+# Sort for better layout
+df = df.sort_values(by="Implementation %", ascending=True)
 
-    # OCR extraction
-    st.subheader("🔍 Extracted Insights")
-    text = pytesseract.image_to_string(image)
+# Bar chart
+fig = px.bar(
+    df,
+    x="Implementation %",
+    y="Domain",
+    orientation="h",
+    title="Control Implementation Rates by Domain",
+    color="Implementation %",
+    color_continuous_scale=px.colors.sequential.Blues,
+    height=700
+)
 
-    with st.expander("Show Raw OCR Text"):
-        st.text_area("Extracted Text", text, height=300)
+fig.update_layout(
+    xaxis_title="Implementation %",
+    yaxis_title="Domain",
+    font=dict(size=14),
+    plot_bgcolor="white",
+    paper_bgcolor="white",
+    margin=dict(l=100, r=40, t=60, b=40)
+)
 
-    # Parsed summary
-    st.subheader("📌 Summary")
-    if "Objective" in text:
-        st.markdown("### 2.1 Objective")
-        st.write("Evaluate the maturity of existing controls and identify control gaps across the Zerto datacenter environment.")
+# Display
+st.plotly_chart(fig, use_container_width=True)
 
-    if "Executive Sponsor" in text:
-        st.markdown("### 2.2 Executive Sponsor")
-        st.write("Fidelma Russo")
-
-    if "Scope of Testing" in text:
-        st.markdown("### 2.3 Scope of Testing")
-        st.write(\"\"\"\n
-        - 227 controls assessed across 16 security domains  
-        - All controls are critical (weight 9–10)  
-        - Covered infrastructure includes VMware, IT systems, DevOps pipelines, and development tools  
-        - Defined collaboratively between HPE and Zerto leadership  
-        - Domains based on business impact, maturity, and risk relevance\n
-        \"\"\")
-
-else:
-    st.info("Please upload a slide image to analyze.")
-
+# Export to PNG
+st.subheader("📤 Export")
+if st.button("Export as PNG"):
+    fig.write_image("control_implementation_chart.png")
+    with open("control_implementation_chart.png", "rb") as f:
+        st.download_button(
+            label="Download PNG",
+            data=f,
+            file_name="control_implementation_chart.png",
+            mime="image/png"
+        )
