@@ -5,4 +5,4 @@ fpdf
 pytesseract
 Pillow
 kaleido
-html2image
+Html2image
