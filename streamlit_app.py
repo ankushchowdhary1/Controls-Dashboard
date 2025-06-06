@@ -25,7 +25,6 @@ st.markdown("""
 
 # Control Table Data
 data = {
-    "Category": ["Maintenance"] * 10,
     "Control Description": [
         "Maintenance operations",
         "Controlled maintenance",
