@@ -3,46 +3,49 @@ import pandas as pd
 
 # Page setup
 st.set_page_config(layout="wide")
-st.title("🧩 Configuration Management (10 Controls) Overview")
+st.title("📡 Continuous Monitoring (14 Controls) Overview")
 
 # Summary
 st.markdown("""
 ### 📊 Summary
-- **Total Controls**: 10 (+2 NA)  
-- **Compliant**: 4  
-- **Partially Compliant**: 1  
-- **Not Compliant**: 4  
-- **Not Assessed (NA)**: 2  
+- **Total Controls**: 14  
+- **Compliant**: 1  
+- **Partially Compliant**: 2  
+- **Not Compliant**: 5  
+- **Not Assessed (NA)**: 6  
 """)
 
-# Recommendation
+# Recommendations
 st.markdown("""
 ### ✅ Recommendation
-> Establish formal baseline documentation and strengthen configuration visibility.
-> - Assign ownership for system hardening and tailoring controls.
-> - Audit user-install permissions and clarify open-source usage policies.
-> - Expand process awareness and evidence collection for NA areas.
+> This domain requires urgent visibility and structure.
+> - Assign control ownership across teams (IR, Infra, Security).
+> - Audit configuration of logs, file monitoring, IDS/IPS systems.
+> - Remove “NA” status by clarifying team responsibilities and validating deployment status.
 """)
 
-# Control Data
+# Table data
 data = {
     "Control Description": [
-        "Configuration management", "System hardening through baseline configurations", "Respond to unauthorized changes",
-        "Approved configuration deviations", "Baseline tailoring", "Least functionality", "Software usage restrictions",
-        "Open source software", "User-installed software", "Restrict roles permitted to install software"
+        "Continuous monitoring controls", "Intrusion detection and prevention systems",
+        "Automated tools for real-time analysis", "Inbound and outbound communications traffic",
+        "File integrity monitoring (FIM)", "Log reviews and updates",
+        "Centralized collection of security event logs", "Correlate monitoring information",
+        "Audit trails", "Time stamps"
     ],
     "Status": [
-        "Not compliant", "Not compliant", "Compliant", "Compliant", "Not compliant", "Partially compliant",
-        "Compliant", "NA", "Compliant", "NA"
+        "Partially compliant", "Partially compliant", "NA", "Not compliant",
+        "Not compliant", "NA", "NA", "Not compliant",
+        "Not compliant", "Compliant"
     ],
     "Risk Rating": ["High"] * 10
 }
 df = pd.DataFrame(data)
 
-# Table
+# Display table
 st.subheader("📋 Control Compliance Table")
 st.dataframe(df, use_container_width=True)
 
-# Export Note
+# Export section
 st.subheader("📤 Export One-Pager")
-st.caption("Use your browser’s print/save option or integrate with html2image for image export.")
+st.caption("Use your browser’s print or PDF save feature for now. PNG automation optional via `html2image`.")
