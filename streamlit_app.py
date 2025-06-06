@@ -1,49 +1,49 @@
 import streamlit as st
 import pandas as pd
 
-# Page setup
+# Streamlit setup
 st.set_page_config(layout="wide")
-st.title("📡 Continuous Monitoring (14 Controls) Overview")
+st.title("🛡️ Endpoint Security (12 Controls) Overview")
 
 # Summary
 st.markdown("""
 ### 📊 Summary
-- **Total Controls**: 14  
-- **Compliant**: 2  
-- **Partially Compliant**: 2  
-- **Not Compliant**: 5  
-- **Not Assessed (NA)**: 5  
+- **Total Controls**: 12  
+- **Compliant**: 5  
+- **Not Compliant / No Response**: 6  
+- **Clarification Needed**: 1 (SentinelOne capabilities unclear)  
 """)
 
 # Recommendation
 st.markdown("""
 ### ✅ Recommendation
-> Formalize monitoring ownership and evidence gathering:
-> - Align teams (IR, Infra, Compliance) with specific controls.
-> - Validate systems like QRadar, NTP sync, and log correlation tooling.
-> - Replace NA labels with documented evaluations or action plans.
+> Endpoint tooling is strong, but process and control attribution is weak.
+> - Confirm SentinelOne coverage for anti-malware, EDR, firewall, etc.
+> - Assign dedicated ownership for endpoint compliance validation.
+> - Resolve all “no response” status items via workshops and internal testing.
 """)
 
-# Data
+# Control Table
 data = {
     "Control Description": [
-        "Continuous monitoring controls", "Intrusion detection and prevention systems", "Automated tools for real-time analysis",
-        "Inbound and outbound communications traffic", "File integrity monitoring (FIM)", "Log reviews and updates",
-        "Centralized collection of security event logs", "Correlate monitoring information", "Audit trails", "Time stamps",
-        "Protection of event logs", "Event log retention", "Anomalous behavior"
+        "Endpoint security controls implementation", "Endpoint protection measures for CIA",
+        "Prohibit installation without privileged status", "Malicious code protection (anti-malware)",
+        "Automatic antimalware signature", "Always-on protection", "Software firewall",
+        "Endpoint detection and response (EDR)", "Host intrusion detection and prevention systems (HIDS/HIPS)",
+        "Phishing and spam protection", "Trusted path", "Collaborative computing devices"
     ],
     "Status": [
-        "Partially compliant", "Partially compliant", "NA", "Not compliant", "Not compliant", "NA",
-        "NA", "Not compliant", "Not compliant", "Compliant", "NA", "Compliant", "NA"
+        "Compliant", "Compliant", "No response", "No response", "No response", "No response",
+        "No response", "No response", "No response", "Compliant", "Compliant", "Not compliant"
     ],
-    "Risk Rating": ["High"] * 13
+    "Risk Rating": ["High"] * 12
 }
 df = pd.DataFrame(data)
 
-# Table Display
+# Display table
 st.subheader("📋 Control Compliance Table")
 st.dataframe(df, use_container_width=True, height=700)
 
-# Export section
+# Export note
 st.subheader("📤 Export One-Pager")
-st.caption("Use the browser's print or PDF save option. Or use html2image for automation.")
+st.caption("Use browser print/save or integrate with html2image for PNG/PDF automation.")
