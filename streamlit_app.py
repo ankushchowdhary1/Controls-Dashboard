@@ -1,64 +1,55 @@
 import streamlit as st
 import pandas as pd
 import plotly.express as px
-
-# Page setup
-st.set_page_config(page_title="Control Implementation Chart", layout="wide")
-st.title("📊 Control Implementation Rates by Domain")
+from html2image import Html2Image
+import os
 
 # Data
 data = {
-    "Domain": [
-        "Security Operations", "Web Security", "Change Management", "Asset Management",
-        "Physical & Environmental Security", "Secure Engineering & Architecture",
-        "Technology Development & Acquisition", "Cloud Security", "Configuration Management",
-        "Vulnerability & Patch Management", "Identification & Authentication", "Compliance",
-        "Endpoint Security", "Network Security", "Maintenance", "Continuous Monitoring"
+    "Control Description": [
+        "Asset governance", "Asset inventories", "Data action mapping",
+        "Network diagrams & data flow diagrams", "Unattended end user equipment",
+        "Tamper detection", "Secure disposal", "Use of third party devices",
+        "BYOD", "Prohibited equipment & services", "Asset categorization"
     ],
-    "Implementation %": [
-        100, 100, 80, 70,
-        65, 60, 58, 55, 55,
-        55, 44, 33,
-        27, 27, 23, 18
-    ]
+    "Status": [
+        "Compliant", "Compliant", "Not compliant", "Partially compliant",
+        "Compliant", "Compliant", "Compliant", "Compliant",
+        "Not compliant", "Not compliant", "Not compliant"
+    ],
+    "Risk Rating": ["High"] * 11
 }
 df = pd.DataFrame(data)
 
-# Sort for better layout
-df = df.sort_values(by="Implementation %", ascending=True)
+# Summary
+st.set_page_config(layout="wide")
+st.title("🔍 Asset Management (12 Controls) Overview")
 
-# Bar chart
-fig = px.bar(
-    df,
-    x="Implementation %",
-    y="Domain",
-    orientation="h",
-    title="Control Implementation Rates by Domain",
-    color="Implementation %",
-    color_continuous_scale=px.colors.sequential.Blues,
-    height=700
-)
+st.markdown("""
+### 📊 Summary
+- **Total Controls**: 12  
+- **Compliant**: 6  
+- **Partially Compliant**: 1  
+- **Not Compliant**: 5  
+""")
 
-fig.update_layout(
-    xaxis_title="Implementation %",
-    yaxis_title="Domain",
-    font=dict(size=14),
-    plot_bgcolor="white",
-    paper_bgcolor="white",
-    margin=dict(l=100, r=40, t=60, b=40)
-)
+# Recommendations
+st.markdown("""
+### ✅ Recommendation
+> Prioritize remediation of missing processes and visibility gaps:
+> - Formalize asset categorization, mapping, and prohibited services documentation.
+> - Audit BYOD usage and enforce formal controls.
+> - Use existing Axonius system to drive automation and monitoring.
+""")
 
-# Display
-st.plotly_chart(fig, use_container_width=True)
+# Show Table
+st.subheader("📋 Control Compliance Table")
+st.dataframe(df, use_container_width=True)
 
-# Export to PNG
-st.subheader("📤 Export")
-if st.button("Export as PNG"):
-    fig.write_image("control_implementation_chart.png")
-    with open("control_implementation_chart.png", "rb") as f:
-        st.download_button(
-            label="Download PNG",
-            data=f,
-            file_name="control_implementation_chart.png",
-            mime="image/png"
-        )
+# Export section
+st.subheader("📤 Export One-Pager to Image")
+if st.button("Generate PNG"):
+    hti = Html2Image()
+    hti.screenshot(html_file="page.html", save_as="asset_mgmt_summary.png")
+    with open("asset_mgmt_summary.png", "rb") as f:
+        st.download_button("Download PNG", data=f, file_name="asset_mgmt_summary.png", mime="image/png")
