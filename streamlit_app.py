@@ -7,40 +7,42 @@ import io
 st.set_page_config(page_title="Slide Analyzer", layout="wide")
 st.title("🧠 Project Slide Analyzer")
 
-# Load and display the image
-image_path = "4605267d-da9b-4719-8fd9-2eeab4aca5f3.png"
-image = Image.open(image_path)
+# File uploader
+uploaded_file = st.file_uploader("Upload a slide image (PNG, JPG)", type=["png", "jpg", "jpeg"])
 
-st.subheader("📷 Uploaded Slide")
-st.image(image, use_column_width=True)
+if uploaded_file:
+    # Display the image
+    image = Image.open(uploaded_file)
+    st.subheader("📷 Uploaded Slide")
+    st.image(image, use_column_width=True)
 
-# OCR extraction
-st.subheader("🔍 Extracted Insights")
-text = pytesseract.image_to_string(image)
+    # OCR extraction
+    st.subheader("🔍 Extracted Insights")
+    text = pytesseract.image_to_string(image)
 
-with st.expander("Show Raw OCR Text"):
-    st.text_area("Extracted Text", text, height=300)
+    with st.expander("Show Raw OCR Text"):
+        st.text_area("Extracted Text", text, height=300)
 
-# Simple logic to extract sections from OCR
-st.subheader("📌 Summary")
+    # Parsed summary
+    st.subheader("📌 Summary")
+    if "Objective" in text:
+        st.markdown("### 2.1 Objective")
+        st.write("Evaluate the maturity of existing controls and identify control gaps across the Zerto datacenter environment.")
 
-if "Objective" in text:
-    st.markdown("### 2.1 Objective")
-    st.write("Evaluate the maturity of existing controls and identify control gaps across the Zerto datacenter environment.")
+    if "Executive Sponsor" in text:
+        st.markdown("### 2.2 Executive Sponsor")
+        st.write("Fidelma Russo")
 
-if "Executive Sponsor" in text:
-    st.markdown("### 2.2 Executive Sponsor")
-    st.write("Fidelma Russo")
+    if "Scope of Testing" in text:
+        st.markdown("### 2.3 Scope of Testing")
+        st.write(\"\"\"\n
+        - 227 controls assessed across 16 security domains  
+        - All controls are critical (weight 9–10)  
+        - Covered infrastructure includes VMware, IT systems, DevOps pipelines, and development tools  
+        - Defined collaboratively between HPE and Zerto leadership  
+        - Domains based on business impact, maturity, and risk relevance\n
+        \"\"\")
 
-if "Scope of Testing" in text:
-    st.markdown("### 2.3 Scope of Testing")
-    st.write("""
-    - 227 controls assessed across 16 security domains  
-    - All controls are critical (weight 9–10)  
-    - Covered infrastructure includes VMware, IT systems, DevOps pipelines, and development tools  
-    - Defined collaboratively between HPE and Zerto leadership  
-    - Domains based on business impact, maturity, and risk relevance
-    """)
+else:
+    st.info("Please upload a slide image to analyze.")
 
-st.markdown("---")
-st.info("You can extend this app to include AI-based entity extraction or a comparison with prior slides for version tracking.")
