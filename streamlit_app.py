@@ -1,54 +1,56 @@
 import streamlit as st
 import pandas as pd
 
-# Page setup
+# Setup
 st.set_page_config(layout="wide")
-st.title("🧪 Technology Development & Acquisition (TDA) Controls Overview")
+st.title("🛡️ Vulnerability & Patch Management Controls (12 Total)")
 
-# Summary Section
+# Summary
 st.markdown("""
 ### 📊 Summary
-- **Total Controls**: 29  
-- **Compliant**: 13  
-- **Not Compliant / No Response**: 16  
+- **Total Controls**: 12  
+- **Compliant**: 5  
+- **Not Compliant / No Response**: 7  
 """)
 
 # Recommendations
 st.markdown("""
 ### ✅ Recommendations
-> TDA controls are partially implemented with notable gaps in secure development practices:
-> - Assign ownership for early-stage security like SBOM, code analysis, and threat remediation.  
-> - Incorporate secure-by-default practices throughout the development lifecycle.  
-> - Improve evidence collection and role clarity for developer responsibilities.
+> While core scanning and remediation using Rapid7 is well-established, automation and centralized tracking are lacking:
+> - Improve visibility into patching and remediation workflow across platforms.  
+> - Assign accountability for automation status, event review, and internal scans.  
+> - Validate and document all control functions, especially those marked "No response".
 """)
 
-# Grouped summary of controls by category
-categories = [
-    "Product Security Lifecycle Governance",
-    "Secure Development Practices",
-    "Code Quality & Testing",
-    "Component & Configuration Security",
-    "Developer Operations & Environment"
-]
-
-data = {
-    "Category": categories,
-    "Risk Rating": ["High"] * 5,
+# Control Table
+controls = {
+    "Control Description": [
+        "Vulnerability & patch management program",
+        "Vulnerability remediation",
+        "Software and firmware patching",
+        "Centralized management of flaw remediation processes",
+        "Automated remediation status",
+        "Vulnerability scanning",
+        "Privileged access",
+        "Trend analysis",
+        "Review historical event logs",
+        "External vulnerability assessment scans",
+        "Internal vulnerability assessment scans",
+        "Penetration testing"
+    ],
+    "Risk Rating": ["High"] * 12,
     "Status": [
-        "Not Compliant",  # SBOM, developer training, role ambiguity
-        "Partially Compliant",  # SDLC, maturity model in place but gaps in enforcement
-        "Not Compliant",  # Lacking static/dynamic analysis and testing evidence
-        "Compliant",  # Secure configuration and access restrictions present
-        "Partially Compliant"  # Some processes followed but lacking coverage and documentation
+        "Compliant", "Compliant", "Not Compliant", "Not Compliant",
+        "Not Compliant", "Compliant", "Not Compliant", "Compliant",
+        "Not Compliant", "Compliant", "Not Compliant", "Not Compliant"
     ]
 }
 
-df = pd.DataFrame(data)
-
-# Table
-st.subheader("📋 Categorized Control Summary")
-st.dataframe(df, use_container_width=True, height=350)
+# Render DataFrame
+st.subheader("📋 Vulnerability & Patch Control Table")
+df = pd.DataFrame(controls)
+st.dataframe(df, use_container_width=True, height=500)
 
 # Export
 st.subheader("📤 Export View")
-st.caption("Use browser print/PDF. PNG export available via html2image integration.")
+st.caption("Use browser print/save. PNG export available via html2image.")
