@@ -1,52 +1,44 @@
 import streamlit as st
 import pandas as pd
-import plotly.express as px
-from html2image import Html2Image
 
 # Streamlit setup
 st.set_page_config(layout="wide")
-st.title("🔧 Change Management (6 Controls) Overview")
+st.title("☁️ Cloud Security (4 Controls) Overview")
 
 # Summary
 st.markdown("""
 ### 📊 Summary
-- **Total Controls**: 6  
-- **Compliant**: 4  
+- **Total Controls**: 4  
+- **Compliant**: 1  
 - **Partially Compliant**: 1  
-- **Not Compliant**: 1  
+- **Not Compliant**: 2  
 """)
 
-# Recommendations
+# Recommendation
 st.markdown("""
 ### ✅ Recommendation
-> Focus on strengthening post-implementation assurance.
-> - Implement verification of control functionality after changes go live.
-> - Integrate testing mechanisms into change workflows.
-> - Improve documentation for prohibitive controls and audit support.
+> Establish formal cloud security controls:
+> - Introduce cloud-specific policy ownership.
+> - Enforce visibility over API usage and multi-tenant environments.
+> - Validate built-in provider security with internal evidence or attestations.
 """)
 
-# Control data
+# Data
 data = {
     "Control Description": [
-        "Change management program", "Prohibition of changes", "Test, validate, and document changes",
-        "Security impact analysis for changes", "Stakeholder notification of changes", "Control functionality verification"
+        "Cloud services controls implementation", "API security",
+        "Multi-tenant environments governance", 
+        "Geolocation requirements for processing, storage, and service locations"
     ],
-    "Status": [
-        "Compliant", "Partially compliant", "Compliant",
-        "Compliant", "Compliant", "Not compliant"
-    ],
-    "Risk Rating": ["High"] * 6
+    "Status": ["Partially compliant", "Not compliant", "Not compliant", "Compliant"],
+    "Risk Rating": ["High"] * 4
 }
 df = pd.DataFrame(data)
 
-# Display control table
+# Table
 st.subheader("📋 Control Compliance Table")
 st.dataframe(df, use_container_width=True)
 
-# Optional PNG export
-st.subheader("📤 Export One-Pager to Image")
-if st.button("Generate PNG"):
-    hti = Html2Image()
-    hti.screenshot(html_file="page.html", save_as="change_mgmt_summary.png")
-    with open("change_mgmt_summary.png", "rb") as f:
-        st.download_button("Download PNG", data=f, file_name="change_mgmt_summary.png", mime="image/png")
+# Optional export
+st.subheader("📤 Export One-Pager")
+st.caption("To download as PNG, use browser’s print feature (Save as Image/PDF) or integrate `html2image` for automation.")
