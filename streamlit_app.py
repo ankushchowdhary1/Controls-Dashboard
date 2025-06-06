@@ -1,44 +1,50 @@
 import streamlit as st
 import pandas as pd
 
-# Streamlit setup
+# Page setup
 st.set_page_config(layout="wide")
-st.title("☁️ Cloud Security (4 Controls) Overview")
+st.title("🛡️ Compliance (6 Controls) Overview")
 
 # Summary
 st.markdown("""
 ### 📊 Summary
-- **Total Controls**: 4  
+- **Total Controls**: 6  
 - **Compliant**: 1  
-- **Partially Compliant**: 1  
-- **Not Compliant**: 2  
+- **Partially Compliant**: 2  
+- **Not Compliant**: 3  
 """)
 
-# Recommendation
+# Recommendations
 st.markdown("""
 ### ✅ Recommendation
-> Establish formal cloud security controls:
-> - Introduce cloud-specific policy ownership.
-> - Enforce visibility over API usage and multi-tenant environments.
-> - Validate built-in provider security with internal evidence or attestations.
+> Prioritize governance and regulatory traceability.
+> - Assign ownership for compliance and cybersecurity regulation coverage.
+> - Implement routine assessments for data protection and governmental access handling.
+> - Leverage existing ISO 27001/9001 certification to build missing documentation.
 """)
 
-# Data
+# Control data
 data = {
     "Control Description": [
-        "Cloud services controls implementation", "API security",
-        "Multi-tenant environments governance", 
-        "Geolocation requirements for processing, storage, and service locations"
+        "Statutory, regulatory and contractual controls identification",
+        "Non-compliance oversight",
+        "Compliance scope",
+        "Cybersecurity & data protection controls oversight",
+        "Cybersecurity & data protection assessment",
+        "Government surveillance"
     ],
-    "Status": ["Partially compliant", "Not compliant", "Not compliant", "Compliant"],
-    "Risk Rating": ["High"] * 4
+    "Status": [
+        "Compliant", "Not compliant", "Partially compliant",
+        "Partially compliant", "Not compliant", "Not compliant"
+    ],
+    "Risk Rating": ["High"] * 6
 }
 df = pd.DataFrame(data)
 
-# Table
+# Table display
 st.subheader("📋 Control Compliance Table")
 st.dataframe(df, use_container_width=True)
 
-# Optional export
+# Export note
 st.subheader("📤 Export One-Pager")
-st.caption("To download as PNG, use browser’s print feature (Save as Image/PDF) or integrate `html2image` for automation.")
+st.caption("Use your browser’s print/save to PDF option or integrate with html2image for automation.")
