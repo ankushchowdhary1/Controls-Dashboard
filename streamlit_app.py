@@ -23,7 +23,6 @@ df = pd.DataFrame(data)
 
 # Summary
 st.set_page_config(layout="wide")
-st.title("🔍 Asset Management (12 Controls) Overview")
 
 st.markdown("""
 ### 📊 Summary
