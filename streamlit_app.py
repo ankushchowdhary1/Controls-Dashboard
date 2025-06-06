@@ -1,8 +1,6 @@
 import streamlit as st
 import pandas as pd
 import plotly.express as px
-from io import BytesIO
-from fpdf import FPDF
 
 # Page configuration
 st.set_page_config(page_title="Compliance Summary Dashboard", layout="wide")
@@ -23,23 +21,24 @@ col3.metric("Fully Compliant Controls", f"{compliant_controls} ({round(compliant
 col4.metric("Non-Compliant Controls", f"{non_compliant_controls} ({round(non_compliant_controls / relevant_controls * 100)}%)")
 
 # Donut Chart for Compliance Status
-data = pd.DataFrame({
-    "Status": ["Compliant", "Non-Compliant", "Non-Relevant"],
-    "Count": [compliant_controls, non_compliant_controls, non_relevant_controls]
-})
+with st.container():
+    data = pd.DataFrame({
+        "Status": ["Compliant", "Non-Compliant", "Non-Relevant"],
+        "Count": [compliant_controls, non_compliant_controls, non_relevant_controls]
+    })
 
-fig = px.pie(
-    data,
-    names='Status',
-    values='Count',
-    hole=0.5,
-    title="Control Compliance Distribution",
-    color_discrete_sequence=px.colors.qualitative.Set2
-)
+    fig = px.pie(
+        data,
+        names='Status',
+        values='Count',
+        hole=0.4,
+        title="Control Compliance Distribution",
+        height=350,
+        color_discrete_sequence=px.colors.qualitative.Set2
+    )
+    st.plotly_chart(fig, use_container_width=True)
 
-st.plotly_chart(fig, use_container_width=True)
-
-# --- Domain-level breakdown table ---
+# Domain-level breakdown table and bar chart side-by-side
 st.subheader("📊 Domain-Level Control Breakdown")
 domain_data = pd.DataFrame({
     "Domain": [
@@ -56,49 +55,21 @@ domain_data = pd.DataFrame({
     "Guidelines": [6, 3, 1, 1, 2, 2, 3, 16, 1, 6, 6, 3, 1, 11, 5, 4]
 })
 
-# Display full table with no dropdown or scroll
-st.dataframe(domain_data, use_container_width=True, height=800)
+col_table, col_chart = st.columns([1.3, 1])
 
-# Compliance Bar Chart
-bar_fig = px.bar(
-    domain_data,
-    x="Domain",
-    y="Compliant %",
-    title="Compliance Percentage by Domain",
-    labels={"Compliant %": "Compliance %"},
-    color="Compliant %",
-    color_continuous_scale="Teal"
-)
-st.plotly_chart(bar_fig, use_container_width=True)
+with col_table:
+    st.dataframe(domain_data, use_container_width=True, height=640)
 
-# --- Export to PDF functionality ---
-def create_pdf(dataframe):
-    pdf = FPDF()
-    pdf.add_page()
-    pdf.set_font("Arial", size=12)
-    pdf.cell(200, 10, txt="Compliance Summary Report", ln=True, align='C')
-    pdf.ln(10)
-
-    for col in dataframe.columns:
-        pdf.cell(40, 10, col, border=1)
-    pdf.ln()
-
-    for index, row in dataframe.iterrows():
-        for col in dataframe.columns:
-            text = str(row[col])
-            pdf.cell(40, 10, text[:15], border=1)
-        pdf.ln()
-
-    buffer = BytesIO()
-    pdf.output(buffer)
-    buffer.seek(0)
-    return buffer
-
-if st.button("📄 Export Domain Data to PDF"):
-    pdf_bytes = create_pdf(domain_data)
-    st.download_button(
-        label="Download PDF",
-        data=pdf_bytes,
-        file_name="compliance_summary.pdf",
-        mime="application/pdf"
+with col_chart:
+    bar_fig = px.bar(
+        domain_data,
+        x="Domain",
+        y="Compliant %",
+        title="Compliance % by Domain",
+        labels={"Compliant %": "Compliance %"},
+        height=640,
+        color="Compliant %",
+        color_continuous_scale="Teal"
     )
+    bar_fig.update_layout(margin=dict(t=40, b=0, l=0, r=0), font=dict(size=10))
+    st.plotly_chart(bar_fig, use_container_width=True)
