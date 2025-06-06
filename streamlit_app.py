@@ -3,11 +3,11 @@ import pandas as pd
 
 # Setup
 st.set_page_config(layout="wide")
-st.title("🧰 Maintenance Controls (10) Overview")
+st.title("🧰 Maintenance Controls Overview (10 Total)")
 
 # Summary
 st.markdown("""
-### 📊 Summary
+### 📊 Control Breakdown
 - **Total Controls**: 10  
 - **Compliant**: 1  
 - **Not Compliant**: 1  
@@ -17,26 +17,48 @@ st.markdown("""
 # Recommendation
 st.markdown("""
 ### ✅ Recommendation
-> Formalize maintenance control ownership and documentation.  
-> - Assign accountable owner for each process.  
-> - Document all remote activities, notifications, encryption safeguards.  
-> - Enforce audit readiness for both internal and vendor-conducted maintenance.
+> Maintenance controls require foundational implementation:
+> - Assign process owners for all remote and physical maintenance activities.  
+> - Configure system logs and access monitoring.  
+> - Align vendor SLAs with evidence-ready documentation.
 """)
 
-# Table Summary
+# Full control data
 data = {
-    "Category": ["Maintenance"],
-    "Total Controls": [10],
-    "Compliant": [1],
-    "Not Compliant": [1],
-    "NA": [8]
+    "Control Description": [
+        "Maintenance operations", "Controlled maintenance", "Timely maintenance",
+        "Prevent unauthorized removal", "Remote maintenance", "Auditing remote maintenance",
+        "Remote maintenance notifications", "Remote maintenance cryptographic protection",
+        "Remote maintenance disconnect verification", "Authorized maintenance personnel"
+    ],
+    "Status": [
+        "NA", "NA", "NA",
+        "NA", "NA", "Not compliant",
+        "NA", "NA",
+        "NA", "Compliant"
+    ],
+    "Risk Rating": ["High"] * 10,
+    "Notes": [
+        "Have no evidence.",
+        "Have no evidence.",
+        "They keep spare parts and have vendor SLAs.",
+        "Have no evidence.",
+        "Have no evidence.",
+        "Not aware of such activity/process.",
+        "Have no evidence.",
+        "Have no evidence.",
+        "Have no evidence.",
+        "Keep a list of DCAccess – employees and contacts."
+    ]
 }
+
+# Create DataFrame
 df = pd.DataFrame(data)
 
-# Display summary table
-st.subheader("📋 Maintenance Control Summary")
-st.dataframe(df, use_container_width=True, height=150)
+# Show full table
+st.subheader("📋 Full Maintenance Control Table")
+st.dataframe(df, use_container_width=True, height=450)
 
-# Export Option
-st.subheader("📤 Export Summary")
-st.caption("Use your browser's print or save-as-PDF feature. For PNG, use html2image integration.")
+# Export option
+st.subheader("📤 Export View")
+st.caption("Use browser print/PDF or integrate html2image for PNG export.")
