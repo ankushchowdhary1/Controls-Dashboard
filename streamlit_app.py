@@ -1,49 +1,48 @@
 import streamlit as st
 import pandas as pd
 
-# Streamlit setup
+# Page Setup
 st.set_page_config(layout="wide")
-st.title("🛡️ Endpoint Security (12 Controls) Overview")
+st.title("🔐 Identification & Access Management (IAM) — 42 Controls")
 
 # Summary
 st.markdown("""
 ### 📊 Summary
-- **Total Controls**: 12  
-- **Compliant**: 5  
-- **Not Compliant / No Response**: 6  
-- **Clarification Needed**: 1 (SentinelOne capabilities unclear)  
+- **Total Controls**: 42  
+- **Compliant**: 24  
+- **Not Compliant / No Response**: 15  
+- **Not Assessed (NA)**: 3  
 """)
 
 # Recommendation
 st.markdown("""
 ### ✅ Recommendation
-> Endpoint tooling is strong, but process and control attribution is weak.
-> - Confirm SentinelOne coverage for anti-malware, EDR, firewall, etc.
-> - Assign dedicated ownership for endpoint compliance validation.
-> - Resolve all “no response” status items via workshops and internal testing.
+> IAM program must close ownership gaps and back claims with control evidence.
+> - Assign accountability for IAM across lifecycle: creation, privilege, audit, and deletion.
+> - Confirm tooling coverage (Okta, NAC, RBAC) against each control.
+> - Replace NA with documented justification or roadmap actions.
 """)
 
-# Control Table
+# Table Data (truncated for illustration; assume continuation to include all 42 rows)
 data = {
     "Control Description": [
-        "Endpoint security controls implementation", "Endpoint protection measures for CIA",
-        "Prohibit installation without privileged status", "Malicious code protection (anti-malware)",
-        "Automatic antimalware signature", "Always-on protection", "Software firewall",
-        "Endpoint detection and response (EDR)", "Host intrusion detection and prevention systems (HIDS/HIPS)",
-        "Phishing and spam protection", "Trusted path", "Collaborative computing devices"
+        "IAM controls implementation", "Authenticate, authorize, and audit",
+        "Identification and authentication for devices", "User provisioning and deprovisioning",
+        "Termination of employment", "Role-based access control", "Password-based authentication",
+        "Access enforcement", "Use of privileged utility programs", "Session lock"
     ],
     "Status": [
-        "Compliant", "Compliant", "No response", "No response", "No response", "No response",
-        "No response", "No response", "No response", "Compliant", "Compliant", "Not compliant"
+        "No response", "No response", "Compliant", "Compliant", "Compliant",
+        "Compliant", "Compliant", "Compliant", "Not compliant", "Compliant"
     ],
-    "Risk Rating": ["High"] * 12
+    "Risk Rating": ["High"] * 10
 }
 df = pd.DataFrame(data)
 
-# Display table
-st.subheader("📋 Control Compliance Table")
-st.dataframe(df, use_container_width=True, height=700)
+# Table Display
+st.subheader("📋 Sample IAM Control Compliance Table")
+st.dataframe(df, use_container_width=True, height=600)
 
-# Export note
+# Export Note
 st.subheader("📤 Export One-Pager")
-st.caption("Use browser print/save or integrate with html2image for PNG/PDF automation.")
+st.caption("Use the browser's print or PDF save option. Add `html2image` to automate PNG export.")
