@@ -42,7 +42,7 @@ df = pd.DataFrame(data)
 
 # Table Display
 st.subheader("📋 Control Compliance Table")
-st.dataframe(df, use_container_width=True)
+st.dataframe(df, use_container_width=True, height=700)
 
 # Export section
 st.subheader("📤 Export One-Pager")
