@@ -7,60 +7,51 @@ st.title("🧰 Maintenance Controls Overview (10 Total)")
 
 # Summary Section
 st.markdown("""
-### 📊 Control Breakdown
+### 📊 Summary
 - **Total Controls**: 10  
 - **Compliant**: 1  
-- **Not Compliant**: 1  
-- **Not Assessed (NA)**: 8  
-
-The majority of maintenance controls are currently not assessed (NA), indicating a gap in ownership or process documentation. Only one control is compliant, and one is explicitly marked as non-compliant.
+- **Not Compliant**: 9  
+- **NA values interpreted as Not Compliant due to lack of evidence**
 """)
 
-# Recommendation Section
+# Recommendations Section
 st.markdown("""
-### ✅ Recommendation
-> Maintenance domain requires foundational process design and documentation:
-> - Assign a responsible team or owner for maintenance governance.  
-> - Formalize remote maintenance procedures, notifications, and cryptographic safeguards.  
-> - Ensure audit logging, disconnect verification, and access restrictions are verifiable.  
-> - Review SLAs with vendors to include compliance with internal control expectations.
+### ✅ Recommendations
+> The maintenance domain exhibits significant control implementation gaps:
+> - Assign formal ownership for maintenance policy, execution, and tracking.  
+> - Implement controls for remote maintenance protections, notifications, cryptography, and access authorization.  
+> - Ensure alignment of service vendors with internal control expectations and document SLAs.
 """)
 
 # Control Table Data
 data = {
+    "Category": ["Maintenance"] * 10,
     "Control Description": [
-        "Maintenance operations", "Controlled maintenance", "Timely maintenance",
-        "Prevent unauthorized removal", "Remote maintenance", "Auditing remote maintenance",
-        "Remote maintenance notifications", "Remote maintenance cryptographic protection",
-        "Remote maintenance disconnect verification", "Authorized maintenance personnel"
-    ],
-    "Status": [
-        "NA", "NA", "NA",
-        "NA", "NA", "Not compliant",
-        "NA", "NA",
-        "NA", "Compliant"
+        "Maintenance operations",
+        "Controlled maintenance",
+        "Timely maintenance",
+        "Prevent unauthorized removal",
+        "Remote maintenance",
+        "Auditing remote maintenance",
+        "Remote maintenance notifications",
+        "Remote maintenance cryptographic protection",
+        "Remote maintenance disconnect verification",
+        "Authorized maintenance personnel"
     ],
     "Risk Rating": ["High"] * 10,
-    "Notes": [
-        "Have no evidence.",
-        "Have no evidence.",
-        "They keep some spare parts to replace in case of a malfunction. In addition, they have support and service agreements with vendors to replace parts within agreed SLA.",
-        "Have no evidence.",
-        "Have no evidence.",
-        "Not aware of such activity/process.",
-        "Have no evidence.",
-        "Have no evidence.",
-        "Have no evidence.",
-        "Keep a list of DCAccess – a list of employees and their contact information."
+    "Status": [
+        "Not Compliant", "Not Compliant", "Not Compliant",
+        "Not Compliant", "Not Compliant", "Not Compliant",
+        "Not Compliant", "Not Compliant", "Not Compliant", "Compliant"
     ]
 }
 
-# Create and display DataFrame
+# DataFrame and display
 df = pd.DataFrame(data)
 
-st.subheader("📋 Maintenance Control Table")
-st.dataframe(df, use_container_width=True, height=500)
+st.subheader("📋 Maintenance Controls Table")
+st.dataframe(df, use_container_width=True, height=450)
 
-# Export Option
-st.subheader("📤 Export View")
-st.caption("Use browser print/PDF or integrate html2image for PNG export.")
+# Export option
+st.subheader("📤 Export One-Pager")
+st.caption("Use your browser's print or PDF export. For PNG, integrate html2image.")
